@@ -31,6 +31,11 @@ public class Test_WithoutLockSupport {
             for (int i = 0; i < 10; i++) {
                 t.add(i);
                 System.out.println("add"+" " + i);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if(t.size() == 5){
                     LockSupport.unpark(t2);
                 }

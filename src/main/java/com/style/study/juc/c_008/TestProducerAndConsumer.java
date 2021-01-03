@@ -15,6 +15,9 @@ public class TestProducerAndConsumer {
     public synchronized void put(Object o){
         list.add(o);
     }
+    public synchronized int size(){
+        return list.size();
+    }
 
     public synchronized Object get(){
         while (list.size() == 0){
@@ -25,13 +28,21 @@ public class TestProducerAndConsumer {
     public static void main(String[] args) {
         TestProducerAndConsumer test = new TestProducerAndConsumer();
         Thread consumer1 = new Thread(() -> {
-            for (int j = 0; j < 75; j++) {
-                System.out.println(Thread.currentThread().getName() + ": 消费到数据" + test.get());
+            while (true) {
+                if(test.size() == 0){
+                    LockSupport.park();
+                }else{
+                    System.out.println(Thread.currentThread().getName() + ": 消费到数据" + test.get());
+                }
             }
         }, "Consumer-1");
         Thread consumer2 = new Thread(() -> {
-            for (int j = 0; j < 75; j++) {
-                System.out.println(Thread.currentThread().getName() + ": 消费到数据" + test.get());
+            while (true) {
+                if(test.size() == 0){
+                    LockSupport.park();
+                }else{
+                    System.out.println(Thread.currentThread().getName() + ": 消费到数据" + test.get());
+                }
             }
         }, "Consumer-2");
 
@@ -43,10 +54,11 @@ public class TestProducerAndConsumer {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    test.put(new Object());
+//                    test.put(new Object());
+                    test.put(j);
                     System.out.println(Thread.currentThread().getName()+": 生产第" + j + "条数据");
                     LockSupport.unpark(consumer1);
-                    LockSupport.unpark(consumer2);
+//                    LockSupport.unpark(consumer2);
                 }
             }, "Producter-" + i).start();
         }
@@ -56,7 +68,7 @@ public class TestProducerAndConsumer {
             e.printStackTrace();
         }
         consumer1.start();
-        consumer2.start();
+//        consumer2.start();
 
     }
 
