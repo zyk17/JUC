@@ -21,6 +21,7 @@ public class TestProducerAndConsumer {
 
     public synchronized Object get(){
         while (list.size() == 0){
+            LockSupport.park();
         }
         return list.pop();
     }
@@ -58,7 +59,7 @@ public class TestProducerAndConsumer {
                     test.put(j);
                     System.out.println(Thread.currentThread().getName()+": 生产第" + j + "条数据");
                     LockSupport.unpark(consumer1);
-//                    LockSupport.unpark(consumer2);
+                    LockSupport.unpark(consumer2);
                 }
             }, "Producter-" + i).start();
         }
@@ -68,7 +69,7 @@ public class TestProducerAndConsumer {
             e.printStackTrace();
         }
         consumer1.start();
-//        consumer2.start();
+        consumer2.start();
 
     }
 
