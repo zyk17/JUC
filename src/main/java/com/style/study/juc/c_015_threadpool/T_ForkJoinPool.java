@@ -15,7 +15,7 @@ import java.util.concurrent.RecursiveTask;
 public class T_ForkJoinPool {
 
     static int[] nums = new int[10000000];
-    static final int MAX_NUM = 500000;
+    static final int MAX_NUM = 50000;
     static Random r = new Random();
 
     static {
