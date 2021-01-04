@@ -1,4 +1,4 @@
-package com.style.study.juc.c001;
+package com.style.study.juc.c_001;
 
 /**
  * @author zhangyuekun
