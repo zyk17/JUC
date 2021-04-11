@@ -13,7 +13,11 @@ public class Test_CacheLine {
 
     public static class T {
         // long 类型64位, 8个字节, 共8个lang类型变量也就是64个字节
-//        long[] nums = new long[7];
+//        long p1, p2, p3, p4, p5, p6, p7;
+//        long p8, p9, p10, p11, p12, p13, p14;
+
+        // 保证这个数据绝对不会和别的在同一个缓存行. 启动该注解需要在启动时加上参数:   -XX:--RestrictContened
+        // @Contended
         long x;
     }
 
