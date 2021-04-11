@@ -16,6 +16,7 @@ public class Test_CacheLine {
 //        long p1, p2, p3, p4, p5, p6, p7;
 //        long p8, p9, p10, p11, p12, p13, p14;
 
+        // 这个注释的效果几乎总是会给对象增加大量的空间开销。只有当时间/空间权衡的性能影响在本质上是值得的.
         // 保证这个数据绝对不会和别的在同一个缓存行. 启动该注解需要在启动时加上参数:   -XX:--RestrictContened
         // @Contended
         long x;
